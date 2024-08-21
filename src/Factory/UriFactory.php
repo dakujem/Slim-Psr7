@@ -27,6 +27,8 @@ use const PHP_URL_QUERY;
 
 class UriFactory implements UriFactoryInterface
 {
+    public const URI_CLASS = Uri::class;
+
     /**
      * {@inheritdoc}
      */
@@ -121,6 +123,6 @@ class UriFactory implements UriFactoryInterface
         string $user = '',
         string $password = ''
     ): Uri {
-        return new Uri($scheme, $host, $port, $path, $query, $fragment, $user, $password);
+        return new (static::URI_CLASS)($scheme, $host, $port, $path, $query, $fragment, $user, $password);
     }
 }
