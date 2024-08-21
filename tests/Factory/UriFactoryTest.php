@@ -255,7 +255,7 @@ class UriFactoryTest extends UriFactoryTestCase
                 string $user = '',
                 string $password = ''
             ): Uri {
-                return new class(
+                return new class (
                     $scheme,
                     $host,
                     $port,
@@ -287,7 +287,7 @@ class UriFactoryTest extends UriFactoryTestCase
                 string $user = '',
                 string $password = ''
             ): Uri {
-                return new class(
+                return new class (
                     $scheme,
                     $host,
                     $port,
