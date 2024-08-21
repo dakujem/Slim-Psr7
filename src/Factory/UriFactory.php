@@ -47,7 +47,7 @@ class UriFactory implements UriFactoryInterface
         $query = $parts['query'] ?? '';
         $fragment = $parts['fragment'] ?? '';
 
-        return new Uri($scheme, $host, $port, $path, $query, $fragment, $user, $pass);
+        return $this->makeUriObject($scheme, $host, $port, $path, $query, $fragment, $user, $pass);
     }
 
     /**
@@ -108,6 +108,19 @@ class UriFactory implements UriFactoryInterface
         }
 
         // Build Uri and return
-        return new Uri($scheme, $host, $port, $requestUri, $queryString, '', $username, $password);
+        return $this->makeUriObject($scheme, $host, $port, $requestUri, $queryString, '', $username, $password);
+    }
+
+    protected function makeUriObject(
+        string $scheme,
+        string $host,
+        ?int $port = null,
+        string $path = '/',
+        string $query = '',
+        string $fragment = '',
+        string $user = '',
+        string $password = ''
+    ): Uri {
+        return new Uri($scheme, $host, $port, $path, $query, $fragment, $user, $password);
     }
 }
