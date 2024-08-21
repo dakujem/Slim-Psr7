@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Slim\Tests\Psr7\Factory;
 
 use Interop\Http\Factory\UriFactoryTestCase;
-use PHPUnit\Framework\MockObject\MockClass;
 use Slim\Psr7\Environment;
 use Slim\Psr7\Factory\UriFactory;
 use Slim\Psr7\Uri;
