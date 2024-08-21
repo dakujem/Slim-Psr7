@@ -37,6 +37,8 @@ class Uri implements UriInterface
         'https' => 443
     ];
 
+    public static ?array $supportedSchemes = self::SUPPORTED_SCHEMES;
+
     /**
      * Uri scheme (without "://" suffix)
      */
@@ -129,10 +131,15 @@ class Uri implements UriInterface
             throw new InvalidArgumentException('Uri scheme must be a string.');
         }
 
+        // In case the supported schemes list is null, do no filtering.
+        if (null === static::$supportedSchemes) {
+            return $scheme;
+        }
+
         $scheme = str_replace('://', '', strtolower($scheme));
-        if (!key_exists($scheme, static::SUPPORTED_SCHEMES)) {
+        if (!key_exists($scheme, static::$supportedSchemes)) {
             throw new InvalidArgumentException(
-                'Uri scheme must be one of: "' . implode('", "', array_keys(static::SUPPORTED_SCHEMES)) . '"'
+                'Uri scheme must be one of: "' . implode('", "', array_keys(static::$supportedSchemes)) . '"'
             );
         }
 
@@ -286,7 +293,10 @@ class Uri implements UriInterface
      */
     protected function hasStandardPort(): bool
     {
-        return static::SUPPORTED_SCHEMES[$this->scheme] === $this->port;
+        if (!isset(static::$supportedSchemes[$this->scheme])) {
+            return null === $this->port;
+        }
+        return static::$supportedSchemes[$this->scheme] === $this->port;
     }
 
     /**
